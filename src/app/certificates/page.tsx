@@ -12,7 +12,7 @@ export default function CertificatesPage() {
     >
       <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
         {certificates.map((c) => (
-          <CertificateCard key={c.id ?? c.title} certificate={c} />
+          <CertificateCard key={c.title} certificate={c} />
         ))}
       </div>
     </PageShell>
