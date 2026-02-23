@@ -1,18 +1,45 @@
+"use client";
+
+import clsx from "clsx";
+
+type Tone =
+  | "neutral"
+  | "university"
+  | "industry"
+  | "success"
+  | "warning";
+
 export default function Badge({
   children,
   tone = "neutral",
 }: {
   children: React.ReactNode;
-  tone?: "neutral" | "university" | "industry";
+  tone?: Tone;
 }) {
-  const map = {
-    neutral: "border-white/15 bg-white/5 text-white/85",
-    university: "border-[var(--amber)]/40 bg-[var(--amber)]/10 text-[var(--amber)]",
-    industry: "border-[var(--mint)]/40 bg-[var(--mint)]/10 text-[var(--mint)]",
+  const toneStyles: Record<Tone, string> = {
+    neutral:
+      "bg-white/5 text-white/70 border-white/10",
+
+    university:
+      "bg-blue-500/10 text-blue-400 border-blue-400/20",
+
+    industry:
+      "bg-purple-500/10 text-purple-400 border-purple-400/20",
+
+    success:
+      "bg-emerald-500/10 text-emerald-400 border-emerald-400/20",
+
+    warning:
+      "bg-amber-500/10 text-amber-400 border-amber-400/20",
   };
 
   return (
-    <span className={`inline-flex items-center gap-2 rounded-full border px-2.5 py-1 text-xs ${map[tone]}`}>
+    <span
+      className={clsx(
+        "inline-flex items-center gap-2 px-3 py-1 text-xs font-medium rounded-full border backdrop-blur",
+        toneStyles[tone]
+      )}
+    >
       {children}
     </span>
   );

@@ -1,3 +1,4 @@
+import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 import type { Metadata } from "next";
 import BootLoader from "@/components/BootLoader";
@@ -30,6 +31,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Navbar />
         <main className="mx-auto w-full max-w-6xl px-6 py-10">{children}</main>
         <Footer />
+        
+        {/* Vercel Analytics */}
+        <Analytics />
       </body>
     </html>
   );
