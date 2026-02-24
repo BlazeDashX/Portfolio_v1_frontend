@@ -1,15 +1,15 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, Variants } from "framer-motion";
 
-const container = {
+const container: Variants = {
   hidden: {},
   show: {
     transition: { staggerChildren: 0.07 },
   },
 };
 
-const item = {
+const item: Variants = {
   hidden: { opacity: 0, x: -12 },
   show: { opacity: 1, x: 0, transition: { duration: 0.4, ease: "easeOut" } },
 };
