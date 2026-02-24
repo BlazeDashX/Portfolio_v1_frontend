@@ -15,6 +15,7 @@ export default function Navbar() {
   { href: "/projects", label: "Projects" },
   { href: "/research", label: "Research" },
   { href: "/certificates", label: "Certificates" },
+  { href: "/resume", label: "Resume" },
   { href: "/contact", label: "Contact" },
 ];
 
