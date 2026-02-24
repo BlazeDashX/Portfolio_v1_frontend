@@ -1,13 +1,16 @@
 "use client";
 
-import PageShell from "@/components/PageShell";
+import Container from "@/components/ui/Container";
+import SectionHeader from "@/components/ui/SectionHeader";
 
 export default function ContactPage() {
   return (
-    <PageShell
-      title="Get in touch"
+    <Container>
+      <div className="space-y-8">
+        <SectionHeader
+          title="Get in touch"
       subtitle="Have a question or a project in mind? Reach out below."
-    >
+    />
       <form className="space-y-5">
         <div>
           <label className="text-sm text-white/70">Name</label>
@@ -41,6 +44,7 @@ export default function ContactPage() {
           Send Message
         </button>
       </form>
-    </PageShell>
+    </div>
+  </Container>
   );
 }

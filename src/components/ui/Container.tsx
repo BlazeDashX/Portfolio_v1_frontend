@@ -1,5 +1,3 @@
-export const Container = ({ children, className = "" }: { children: React.ReactNode, className?: string }) => (
-  <div className={`max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 ${className}`}>
-    {children}
-  </div>
-);
+export default function Container({ children }: { children: React.ReactNode }) {
+  return <div className="mx-auto max-w-5xl px-4 py-10">{children}</div>;
+}

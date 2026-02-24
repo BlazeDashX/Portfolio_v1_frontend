@@ -1,7 +1,7 @@
 "use client";
 import { useState } from 'react';
 import { projects } from '@/data/projects';
-import { Container } from '@/components/ui/Container';
+import  Container from '@/components/ui/Container';
 import ProjectCard from '@/components/project/ProjectCard';
 
 export default function ProjectsPage() {
@@ -13,7 +13,8 @@ export default function ProjectsPage() {
   );
 
   return (
-    <Container className="py-12">
+  <Container>
+    <div className="space-y-8">
       <h1 className="text-4xl font-bold mb-8">Engineering Projects</h1>
 
       <input
@@ -26,6 +27,7 @@ export default function ProjectsPage() {
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
         {filteredProjects.map(p => <ProjectCard key={p.slug} project={p} />)}
       </div>
-    </Container>
+    </div>
+  </Container>
   );
 }

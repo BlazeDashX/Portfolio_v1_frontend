@@ -2,6 +2,7 @@ import { profile, certificates, projects, research } from "@/data";
 import PrimaryCTA from "@/components/common/PrimaryCTA";
 import Highlights from "@/components/about/Highlights";
 import SkillsGrid from "@/components/about/SkillsGrid";
+import Container from "@/components/ui/Container";
 
 export default function AboutPage() {
   const quickStats = [
@@ -11,7 +12,8 @@ export default function AboutPage() {
   ];
 
   return (
-    <main className="mx-auto max-w-5xl px-4 py-10">
+  <Container>
+    <div className="space-y-8">
       {/* Header */}
       <header className="space-y-4">
         <h1 className="text-3xl font-bold">About</h1>
@@ -57,6 +59,7 @@ export default function AboutPage() {
           <PrimaryCTA href={profile.linkedin} label="LinkedIn" variant="outline" />
         </div>
       </section>
-    </main>
+    </div>
+  </Container>
   );
 }
