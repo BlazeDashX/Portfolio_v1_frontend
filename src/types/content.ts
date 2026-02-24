@@ -65,12 +65,24 @@ export interface Certificate {
   image: string;
 }
 
+
 export interface ResearchItem {
+  slug: string;
   title: string;
-  description: string;
-  domain: string;
+  abstract: string;
+
+  domain: string; // e.g. "Object Detection"
   status: ResearchStatus;
+
   tags: string[];
-  paperUrl?: string;
-  githubUrl?: string;
+
+  venue?: string; // e.g. "Preprint / IEEE / Workshop"
+  year?: number;
+
+  datasets?: string[];
+  methods?: string[];
+  metrics?: { label: string; value: string }[];
+
+  paperUrl?: string;  // PDF/DOI/Arxiv link
+  githubUrl?: string; // code link
 }

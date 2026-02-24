@@ -2,30 +2,42 @@ import type { ResearchItem } from "@/types/content";
 
 export const research: ResearchItem[] = [
   {
-    title: "CNN-based Bengali Handwritten Digit Recognition",
-    description:
-      "Improving accuracy on noisy datasets using custom augmentation.",
-    domain: "Computer Vision",
-    status: "Published",
-    tags: ["Computer Vision", "CNN"],
-    paperUrl: "#",
-    githubUrl: "#",
+    slug: "dcas-small-object-detection",
+    title: "Dynamic Context-Aware Aggregation Strategy for Small Object Detection",
+    abstract:
+      "Proposes a dynamic context-aware aggregation strategy to improve small object detection under occlusion and scale variation using adaptive receptive fields and feature fusion.",
+    domain: "Object Detection",
+    status: "Draft",
+    tags: ["small-object", "feature-fusion", "attention", "YOLO"],
+
+    venue: "Preprint",
+    year: 2026,
+
+    datasets: ["VisDrone", "BDD100K", "TT100K"],
+    methods: ["Multi-scale fusion", "Context-aware aggregation", "Attention mechanism"],
+    metrics: [{ label: "mAP", value: "TBD" }],
+
+    paperUrl: "",
+    githubUrl: "",
   },
+
   {
-    title: "Object Detection in Low Light Environments",
-    description:
-      "Developing a lightweight YOLO variant for nighttime surveillance.",
-    domain: "CV/ML",
+    slug: "aqi-from-images",
+    title: "Air Quality Index Estimation from Images using CNNs",
+    abstract:
+      "Predicts AQI (PM10) from environmental images using CNN backbones (ResNet-50 / MobileNet) as a low-cost alternative to sensor-based monitoring.",
+    domain: "Image Regression",
     status: "In Progress",
-    tags: ["YOLOv8", "Image Enhancement"],
-    githubUrl: "#",
-  },
-  {
-    title: "NLP for Sentiment Analysis in Local Dialects",
-    description:
-      "Analyzing social media comments in non-standard Bengali.",
-    domain: "NLP",
-    status: "In Progress",
-    tags: ["Transformers", "Bangla"],
+    tags: ["AQI", "CNN", "regression", "ResNet", "MobileNet"],
+
+    venue: "University Work",
+    year: 2026,
+
+    datasets: ["Beijing AQI Image Dataset (291 labeled images)"],
+    methods: ["ResNet-50", "MobileNet", "image-based AQI regression"],
+    metrics: [{ label: "Accuracy", value: "86.8% (ResNet-50)" }],
+
+    paperUrl: "",
+    githubUrl: "",
   },
 ];

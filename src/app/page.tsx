@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import MagneticButton from "@/components/MagneticButton";
 import ProfileTilt from "@/components/ProfileTilt";
-import ProjectCard from "@/components/ProjectCard";
+import ProjectCard from "@/components/project/ProjectCard";
 import GitHubStats from "@/components/github/GitHubStats";
 import { projects } from "@/data";
 

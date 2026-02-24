@@ -1,47 +1,94 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import PageShell from "@/components/PageShell";
-import ResearchCard from "@/components/ResearchCard";
-import { research } from "@/data/research";
+import { research } from "@/data";
+import ResearchCard from "@/components/research/ResearchCard";
 
 export default function ResearchPage() {
-  const [q, setQ] = useState("");
+  const [query, setQuery] = useState("");
+  const [activeTag, setActiveTag] = useState<string | null>(null);
+
+  const allTags = useMemo(() => {
+    const set = new Set<string>();
+    research.forEach((r) => r.tags.forEach((t) => set.add(t)));
+    return Array.from(set).sort();
+  }, []);
 
   const filtered = useMemo(() => {
-    const s = q.trim().toLowerCase();
-    if (!s) return research;
+    const q = query.trim().toLowerCase();
 
     return research.filter((r) => {
-      const hay =
-        `${r.title} ${r.description} ${r.domain} ${r.status} ${r.tags.join(" ")}`.toLowerCase();
-      return hay.includes(s);
+      const matchesQuery =
+        !q ||
+        r.title.toLowerCase().includes(q) ||
+        r.abstract.toLowerCase().includes(q) ||
+        r.domain.toLowerCase().includes(q) ||
+        (r.venue || "").toLowerCase().includes(q) ||
+        r.tags.some((t) => t.toLowerCase().includes(q));
+
+      const matchesTag = !activeTag || r.tags.includes(activeTag);
+
+      return matchesQuery && matchesTag;
     });
-  }, [q]);
+  }, [query, activeTag]);
 
   return (
-    <PageShell
-      title="Research & Publications"
-      subtitle="Exploring deep learning, computer vision, and NLP to solve complex real-world problems."
-    >
-      <input
-        value={q}
-        onChange={(e) => setQ(e.target.value)}
-        placeholder="Filter by domain, title, or status (e.g., Published)…"
-        className="w-full max-w-xl mb-8 p-3 rounded-xl border border-white/10 bg-black/20 text-white/80 placeholder:text-white/40 focus:outline-none focus:ring-2 focus:ring-(--mint)/40"
-      />
+    <main className="mx-auto max-w-5xl px-4 py-10 space-y-8">
+      <header className="space-y-2">
+        <h1 className="text-3xl font-bold">Research</h1>
+        <p className="opacity-80">
+          Academic-style summaries of my research work, experiments, and ongoing directions.
+        </p>
+      </header>
 
-      {filtered.length === 0 ? (
-        <div className="text-white/60 text-sm">
-          No research items found. Add items in <span className="text-white/85 font-semibold">src/data/research.ts</span>.
-        </div>
-      ) : (
-        <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-          {filtered.map((r) => (
-            <ResearchCard key={r.title} item={r} />
-          ))}
-        </div>
-      )}
-    </PageShell>
+      {/* Search */}
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+        <input
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          placeholder="Search by title, domain, tag..."
+          className="w-full sm:max-w-md rounded-lg border bg-transparent px-4 py-2 text-sm outline-none"
+        />
+
+        <button
+          onClick={() => {
+            setQuery("");
+            setActiveTag(null);
+          }}
+          className="rounded-lg border px-4 py-2 text-sm"
+        >
+          Reset
+        </button>
+      </div>
+
+      {/* Tags */}
+      <div className="flex flex-wrap gap-2">
+        <button
+          onClick={() => setActiveTag(null)}
+          className={`rounded-full border px-3 py-1 text-xs ${activeTag === null ? "opacity-100" : "opacity-70"
+            }`}
+        >
+          All
+        </button>
+
+        {allTags.map((t) => (
+          <button
+            key={t}
+            onClick={() => setActiveTag(t)}
+            className={`rounded-full border px-3 py-1 text-xs ${activeTag === t ? "opacity-100" : "opacity-70"
+              }`}
+          >
+            {t}
+          </button>
+        ))}
+      </div>
+
+      {/* List */}
+      <section className="grid gap-5 md:grid-cols-2">
+        {filtered.map((item) => (
+          <ResearchCard key={item.slug} item={item} />
+        ))}
+      </section>
+    </main>
   );
 }
