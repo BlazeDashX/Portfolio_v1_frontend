@@ -16,6 +16,10 @@ export interface Profile {
     tools: string[];
     research: string[];
   };
+  stats?: {
+    label: string;
+    value: string;
+  }[];
 }
 
 export interface Project {
@@ -35,7 +39,7 @@ export interface Project {
   images?: string[];
   date?: string; // "YYYY-MM"
 
-    // Case study (premium fields)
+  // Case study (premium fields)
   role?: string; // e.g. "Full-stack Developer"
   team?: string; // e.g. "Solo / Team of 3"
   duration?: string; // e.g. "3 weeks"
