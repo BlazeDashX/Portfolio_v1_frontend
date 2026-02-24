@@ -65,7 +65,7 @@ export default function BootLoader() {
     return (
         <AnimatePresence>
             {show && (
-                <div className="fixed inset-0 z-[9999] flex flex-col overflow-hidden">
+                <div className="fixed inset-0 z-9999 flex flex-col overflow-hidden">
                     {/* ── Top curtain panel ── */}
                     <motion.div
                         className="relative flex-1 flex flex-col items-center justify-end pb-0 overflow-hidden"
@@ -111,7 +111,7 @@ export default function BootLoader() {
                                     initial={{ opacity: 0, width: 0 }}
                                     animate={{ opacity: 1, width: "100%" }}
                                     transition={{ duration: 0.6, delay: 0.3 }}
-                                    className="mt-2 h-[1px]"
+                                    className="mt-2 h-px"
                                     style={{ background: `linear-gradient(to right, transparent, ${accent}, transparent)` }}
                                 />
                                 <motion.p
