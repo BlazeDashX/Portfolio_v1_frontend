@@ -7,9 +7,58 @@ import ParticlesMesh from "@/components/ParticlesMesh";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
+
 export const metadata: Metadata = {
-  title: "Refat | Portfolio",
-  description: "Projects, Research, Certificates — by Refat",
+  metadataBase: new URL("https://refatmdlabbi.vercel.app"),
+
+  title: {
+    default: "Refat | CSE Student • Web Dev • CV/ML Learner",
+    template: "%s | Refat",
+  },
+
+  description:
+    "Portfolio of Refat — CSE student building production-grade web systems and exploring computer vision & deep learning.",
+
+  keywords: [
+    "Refat",
+    "CSE student",
+    "Next.js developer",
+    "Computer Vision",
+    "Machine Learning",
+    "Portfolio",
+  ],
+
+  authors: [{ name: "Refat" }],
+
+  openGraph: {
+  title: "Refat — Developer Portfolio",
+  description:
+    "Production-style web systems + CV/ML research exploration.",
+  url: "https://refatmdlabbi.vercel.app",
+  siteName: "Refat Portfolio",
+  locale: "en_US",
+  type: "website",
+  images: [
+    {
+      url: "/opengraph-image",
+      width: 1200,
+      height: 630,
+    },
+  ],
+},
+
+  twitter: {
+  card: "summary_large_image",
+  title: "Refat — Developer Portfolio",
+  description:
+    "Web systems, research projects, and technical depth.",
+  images: ["/opengraph-image"],
+},
+
+  robots: {
+    index: true,
+    follow: true,
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

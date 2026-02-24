@@ -1,5 +1,5 @@
 import React from "react";
-import { Container } from "@/components/ui/Container";
+import Container from "@/components/ui/Container";
 
 export default function PageShell({
   title,
@@ -11,7 +11,7 @@ export default function PageShell({
   children: React.ReactNode;
 }) {
   return (
-    <Container className="pt-24 pb-16">
+    <Container>
       <header className="mb-10">
         <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight">
           {title}
