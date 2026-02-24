@@ -34,6 +34,22 @@ export interface Project {
   liveUrl?: string;
   images?: string[];
   date?: string; // "YYYY-MM"
+
+    // Case study (premium fields)
+  role?: string; // e.g. "Full-stack Developer"
+  team?: string; // e.g. "Solo / Team of 3"
+  duration?: string; // e.g. "3 weeks"
+  category?: string; // e.g. "Web App / Backend / Research"
+
+  objectives?: string[];
+  architecture?: string[];
+  challenges?: string[];
+  learnings?: string[];
+
+  metrics?: {
+    label: string; // e.g. "Response time"
+    value: string; // e.g. "↓ 35%"
+  }[];
 }
 
 export interface Certificate {
