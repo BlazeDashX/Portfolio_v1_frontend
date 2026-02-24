@@ -3,6 +3,7 @@ import { projects } from "@/data";
 import CaseStudyLayout from "@/components/case-study/CaseStudyLayout";
 import type { Metadata } from "next";
 
+export const revalidate = 86400;
 export async function generateMetadata({
   params,
 }: {

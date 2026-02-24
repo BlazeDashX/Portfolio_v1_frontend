@@ -3,6 +3,7 @@
 import { useState } from "react";
 import type { Certificate } from "@/types/content";
 import Modal from "@/components/common/Modal";
+import Image from "next/image";
 
 export default function CertificateCard({ cert }: { cert: Certificate }) {
   const [open, setOpen] = useState(false);
@@ -51,7 +52,13 @@ export default function CertificateCard({ cert }: { cert: Certificate }) {
       <Modal open={open} onClose={() => setOpen(false)} title={cert.title}>
         <div className="space-y-3">
           <div className="overflow-hidden rounded-xl border">
-            <img src={cert.image} alt={cert.title} className="h-auto w-full" />
+            <Image
+              src={cert.image}
+              alt={cert.title}
+              width={1400}
+              height={900}
+              className="h-auto w-full"
+            />
           </div>
 
           <div className="flex flex-wrap gap-3">

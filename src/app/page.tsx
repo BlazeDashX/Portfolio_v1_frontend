@@ -2,13 +2,16 @@
 
 import { motion } from "framer-motion";
 import MagneticButton from "@/components/MagneticButton";
-import ProfileTilt from "@/components/ProfileTilt";
+import dynamic from "next/dynamic";
 import ProjectCard from "@/components/project/ProjectCard";
 import GitHubStats from "@/components/github/GitHubStats";
 import { projects } from "@/data";
 
+const ProfileTilt = dynamic(() => import("@/components/ProfileTilt"), {
+  ssr: false,
+});
+
 export default function HomePage() {
-  // ✅ Pick featured items from your real data (no duplicates, no `as any`)
   const featuredSlugs = ["e-commerce-engine", "task-orchestrator", "portfolio-v2"];
   const featured = projects.filter((p) => featuredSlugs.includes(p.slug));
 

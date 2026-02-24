@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
 
 type Profile = {
   login: string;
@@ -66,11 +67,14 @@ export default function GitHubStats() {
   return (
     <section className="rounded-xl border p-5">
       <div className="flex items-center gap-4">
-        <img
-          src={profile.avatar_url}
-          alt="GitHub avatar"
-          className="h-12 w-12 rounded-full border"
-        />
+        <Image
+  src={profile.avatar_url}
+  alt="GitHub avatar"
+  width={48}
+  height={48}
+  className="h-12 w-12 rounded-full border"
+  priority={false}
+/>
         <div>
           <p className="text-lg font-semibold">{profile.name || profile.login}</p>
           <p className="text-sm opacity-70">@{profile.login}</p>
