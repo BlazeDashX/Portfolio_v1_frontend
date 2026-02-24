@@ -98,6 +98,14 @@ export default function Navbar() {
 
             {/* Right controls */}
             <div className="flex shrink-0 items-center gap-2">
+              {/* Shortcut Hint */}
+              <div
+                className="hidden lg:flex items-center gap-1 rounded bg-card px-2 py-1 text-[10px] font-medium tracking-wide opacity-60 mr-1"
+                style={{ border: "1px solid var(--border)", color: "var(--text)" }}
+              >
+                <kbd className="font-sans">Ctrl</kbd>+<kbd className="font-sans">K</kbd>
+              </div>
+
               {/* Controlled ThemePicker — closes mobile menu when opened */}
               <ThemePicker isOpen={themeOpen} onOpenChange={handleThemeOpen} />
 

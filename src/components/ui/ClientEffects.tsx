@@ -7,6 +7,7 @@ import BootLoader from "@/components/ui/BootLoader";
 
 const ScrollProgress = dynamic(() => import("@/components/ui/ScrollProgress"), { ssr: false });
 const FloatingParticles = dynamic(() => import("@/components/ui/FloatingParticles"), { ssr: false });
+const CommandPalette = dynamic(() => import("@/components/ui/CommandPalette"), { ssr: false });
 
 export default function ClientEffects() {
     return (
@@ -16,6 +17,7 @@ export default function ClientEffects() {
             <FloatingParticles />
             <BackToTop />
             <KeyboardHints />
+            <CommandPalette />
         </>
     );
 }
