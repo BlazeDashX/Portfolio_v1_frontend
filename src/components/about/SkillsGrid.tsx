@@ -1,3 +1,29 @@
+"use client";
+
+import { motion } from "framer-motion";
+
+const container = {
+  hidden: {},
+  show: { transition: { staggerChildren: 0.1 } },
+};
+
+const cardVariant = {
+  hidden: { opacity: 0, y: 20 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" as const } },
+};
+
+const chipVariant = {
+  hidden: { opacity: 0, scale: 0.8 },
+  show: { opacity: 1, scale: 1, transition: { duration: 0.3 } },
+};
+
+const groupIcons: Record<string, string> = {
+  Frontend: "⚡",
+  Backend: "🔧",
+  Tools: "🛠",
+  Research: "🔬",
+};
+
 export default function SkillsGrid({
   skills,
 }: {
@@ -16,19 +42,46 @@ export default function SkillsGrid({
   ];
 
   return (
-    <div className="grid gap-4 sm:grid-cols-2">
+    <motion.div
+      variants={container}
+      initial="hidden"
+      whileInView="show"
+      viewport={{ once: true, margin: "-40px" }}
+      className="grid gap-4 sm:grid-cols-2"
+    >
       {groups.map((g) => (
-        <div key={g.title} className="rounded-xl border p-5">
-          <h3 className="text-lg font-semibold">{g.title}</h3>
-          <div className="mt-3 flex flex-wrap gap-2">
+        <motion.div
+          key={g.title}
+          variants={cardVariant}
+          whileHover={{ y: -4 }}
+          className="rounded-2xl border border-soft bg-card p-5 transition-shadow duration-300"
+          style={{ boxShadow: "0 2px 14px rgba(0,0,0,0.2)" }}
+        >
+          <h3 className="mb-3 flex items-center gap-2 text-base font-semibold text-main">
+            <span>{groupIcons[g.title] ?? "•"}</span>
+            {g.title}
+          </h3>
+
+          <motion.div
+            variants={container}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true }}
+            className="flex flex-wrap gap-2"
+          >
             {g.items.map((x) => (
-              <span key={x} className="rounded-full border px-3 py-1 text-sm opacity-90">
+              <motion.span
+                key={x}
+                variants={chipVariant}
+                whileHover={{ scale: 1.1 }}
+                className="cursor-default rounded-full border border-soft bg-card px-3 py-1 text-xs text-main"
+              >
                 {x}
-              </span>
+              </motion.span>
             ))}
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
       ))}
-    </div>
+    </motion.div>
   );
 }

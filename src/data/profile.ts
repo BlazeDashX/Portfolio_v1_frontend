@@ -26,4 +26,34 @@ export const profile: Profile = {
     { label: "Certificates", value: "8+" },
     { label: "Research focus", value: "CV / Detection" },
   ],
+  timeline: [
+    {
+      title: "B.Sc. in Computer Science",
+      org: "American International University — Bangladesh (AIUB)",
+      period: "2022 – Present",
+      description: "Studying core CS fundamentals, algorithms, data structures, OS, databases, and software engineering. Active in programming clubs.",
+      type: "education" as const,
+    },
+    {
+      title: "CV/ML Research — Object Detection",
+      org: "Independent / University Lab",
+      period: "2024 – Present",
+      description: "Exploring object detection pipelines, model optimization, and segmentation using PyTorch and OpenCV. Working towards first publication.",
+      type: "research" as const,
+    },
+    {
+      title: "Full-Stack Web Developer",
+      org: "Freelance / Personal Projects",
+      period: "2023 – Present",
+      description: "Building production-style web apps with Next.js, TypeScript, PostgreSQL, and Redis. Focus on clean architecture and scalable APIs.",
+      type: "work" as const,
+    },
+    {
+      title: "Higher Secondary Certificate (HSC)",
+      org: "Comilla Cadet College",
+      period: "2020 – 2022",
+      description: "Completed HSC with a focus on science. Developed strong analytical foundation and discipline.",
+      type: "education" as const,
+    },
+  ],
 };

@@ -20,6 +20,13 @@ export interface Profile {
     label: string;
     value: string;
   }[];
+  timeline?: {
+    title: string;
+    org: string;
+    period: string;
+    description: string;
+    type: "education" | "work" | "research";
+  }[];
 }
 
 export interface Project {

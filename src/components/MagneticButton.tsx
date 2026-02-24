@@ -37,10 +37,10 @@ export default function MagneticButton({
     "inline-flex items-center justify-center rounded-2xl px-6 py-3 text-sm font-medium transition will-change-transform";
 
   const solid =
-    "bg-white text-black hover:-translate-y-0.5 shadow-[0_0_0_1px_rgba(255,255,255,.1)] hover:shadow-[0_18px_55px_rgba(255,183,3,.18)]";
+    "hover:-translate-y-0.5 shadow-[0_0_0_1px_rgba(255,255,255,.1)]";
 
   const ghost =
-    "border border-white/15 bg-white/5 text-white hover:bg-white/8 hover:-translate-y-0.5";
+    "border border-soft bg-card text-main hover:-translate-y-0.5";
 
   return (
     <motion.div style={{ x: sx, y: sy }} className="inline-block">
@@ -50,6 +50,15 @@ export default function MagneticButton({
         onMouseMove={onMove}
         onMouseLeave={onLeave}
         className={`${base} ${variant === "solid" ? solid : ghost}`}
+        style={
+          variant === "solid"
+            ? {
+              background: "var(--accent)",
+              color: "var(--bg)",
+              boxShadow: "0 0 22px color-mix(in srgb, var(--accent) 35%, transparent)",
+            }
+            : undefined
+        }
       >
         {children}
       </Link>

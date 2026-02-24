@@ -1,51 +1,527 @@
 @import "tailwindcss";
 
-:root{
-  --bg: #0E0E10;        /* graphite */
-  --panel: rgba(255,255,255,.04);
-  --stroke: rgba(255,255,255,.10);
+/* =========================
+   DESIGN TOKENS (DEFAULTS)
+   ========================= */
 
-  --amber: #FFB703;     /* electric amber */
-  --mint: #00F5D4;      /* toxic mint */
-  --coral: #FF4D6D;     /* rare highlight */
+:root {
+  --radius: 14px;
+  --transition: 200ms ease;
+
+  /* Defaults before data attrs (safe fallback) */
+  --bg: #05070d;
+  --text: #d7fff3;
+  --muted: rgba(215, 255, 243, 0.65);
+
+  --card: rgba(0, 255, 204, 0.06);
+  --border: rgba(0, 255, 204, 0.18);
+
+  --accent: #00ffcc;
+  --accent2: #ff3df2;
+  --glow: 0 0 18px rgba(0, 255, 204, 0.22);
 }
 
-/* smooth scroll */
-html { scroll-behavior: smooth; }
+/* =========================
+   CYBER (PRIMARY) — CLEAN TERMINAL
+   ========================= */
 
-/* global base */
-body{
+html[data-style="cyber"][data-mode="dark"] {
+  --bg: #05070d;
+  --text: #d7fff3;
+  --muted: rgba(215, 255, 243, 0.65);
+
+  --card: rgba(0, 255, 204, 0.06);
+  --border: rgba(0, 255, 204, 0.18);
+
+  --accent: #00ffcc;
+  --accent2: #ff3df2;
+  --glow: 0 0 18px rgba(0, 255, 204, 0.22);
+}
+
+html[data-style="cyber"][data-mode="light"] {
+  --bg: #f4fff9;
+  --text: #06251e;
+  --muted: rgba(6, 37, 30, 0.65);
+
+  --card: rgba(0, 200, 160, 0.08);
+  --border: rgba(0, 160, 130, 0.22);
+
+  --accent: #00b894;
+  --accent2: #ff2ac8;
+  --glow: 0 0 16px rgba(0, 184, 148, 0.18);
+}
+
+/* =========================
+   CLEAN (ALT) — MINIMAL
+   ========================= */
+
+html[data-style="clean"][data-mode="dark"] {
+  --bg: #0b0f14;
+  --text: #f3f4f6;
+  --muted: rgba(243, 244, 246, 0.65);
+
+  --card: rgba(255, 255, 255, 0.04);
+  --border: rgba(255, 255, 255, 0.10);
+
+  --accent: #60a5fa;
+  --accent2: #22c55e;
+  --glow: 0 0 0 rgba(0, 0, 0, 0);
+}
+
+html[data-style="clean"][data-mode="light"] {
+  --bg: #ffffff;
+  --text: #0f172a;
+  --muted: rgba(15, 23, 42, 0.65);
+
+  --card: rgba(2, 6, 23, 0.04);
+  --border: rgba(2, 6, 23, 0.10);
+
+  --accent: #0ea5e9;
+  --accent2: #22c55e;
+  --glow: 0 0 0 rgba(0, 0, 0, 0);
+}
+
+/* =========================
+   NEON NOIR — Magenta Darkness
+   Deep black with electric violet/magenta.
+   Dark only (noir is always dark).
+   ========================= */
+
+html[data-style="noir"][data-mode="dark"] {
+  --bg: #060409;
+  --text: #f0d6ff;
+  --muted: rgba(240, 214, 255, 0.60);
+
+  --card: rgba(180, 0, 255, 0.07);
+  --border: rgba(200, 50, 255, 0.22);
+
+  --accent: #d946ef;
+  /* electric magenta */
+  --accent2: #7c3aed;
+  /* deep violet */
+  --glow: 0 0 22px rgba(217, 70, 239, 0.30);
+}
+
+html[data-style="noir"][data-mode="light"] {
+  --bg: #1a001f;
+  --text: #f5d0fe;
+  --muted: rgba(245, 208, 254, 0.65);
+
+  --card: rgba(180, 0, 255, 0.10);
+  --border: rgba(200, 50, 255, 0.28);
+
+  --accent: #e879f9;
+  --accent2: #a855f7;
+  --glow: 0 0 18px rgba(232, 121, 249, 0.25);
+}
+
+/* =========================
+   INFERNO — Volcanic Lava
+   Deep charcoal with red-orange fire accents.
+   ========================= */
+
+html[data-style="inferno"][data-mode="dark"] {
+  --bg: #0c0502;
+  --text: #ffe8d6;
+  --muted: rgba(255, 232, 214, 0.60);
+
+  --card: rgba(255, 80, 0, 0.07);
+  --border: rgba(255, 100, 20, 0.22);
+
+  --accent: #f97316;
+  /* lava orange */
+  --accent2: #ef4444;
+  /* fire red */
+  --glow: 0 0 22px rgba(249, 115, 22, 0.30);
+}
+
+html[data-style="inferno"][data-mode="light"] {
+  --bg: #fff7ed;
+  --text: #431407;
+  --muted: rgba(67, 20, 7, 0.65);
+
+  --card: rgba(255, 100, 20, 0.07);
+  --border: rgba(255, 100, 20, 0.20);
+
+  --accent: #ea580c;
+  --accent2: #dc2626;
+  --glow: 0 0 16px rgba(234, 88, 12, 0.20);
+}
+
+/* =========================
+   AURORA — Northern Lights
+   Deep midnight with emerald/violet aurora shimmer.
+   ========================= */
+
+html[data-style="aurora"][data-mode="dark"] {
+  --bg: #020b10;
+  --text: #d1fae5;
+  --muted: rgba(209, 250, 229, 0.58);
+
+  --card: rgba(16, 185, 129, 0.07);
+  --border: rgba(52, 211, 153, 0.20);
+
+  --accent: #34d399;
+  /* emerald aurora */
+  --accent2: #818cf8;
+  /* violet shimmer */
+  --glow: 0 0 24px rgba(52, 211, 153, 0.28);
+}
+
+html[data-style="aurora"][data-mode="light"] {
+  --bg: #ecfdf5;
+  --text: #064e3b;
+  --muted: rgba(6, 78, 59, 0.65);
+
+  --card: rgba(16, 185, 129, 0.08);
+  --border: rgba(16, 185, 129, 0.22);
+
+  --accent: #059669;
+  --accent2: #6366f1;
+  --glow: 0 0 16px rgba(5, 150, 105, 0.18);
+}
+
+/* =========================
+   BASE / NORMALIZATION
+   ========================= */
+
+html,
+body {
+  height: 100%;
+}
+
+body {
   background: var(--bg);
-  color: rgba(255,255,255,.92);
-}
+  color: var(--text);
+  transition: background var(--transition), color var(--transition);
 
-/* Premium background helpers */
-.bg-graphite { background: var(--bg); }
+  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial,
+    "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
 
-.noise-overlay{
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23n)' opacity='.12'/%3E%3C/svg%3E");
-  background-size: 220px 220px;
-}
-
-/* optional: nicer text rendering */
-*{
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-/* Accessible focus ring */
-:focus-visible {
-  outline: 2px solid rgba(0, 245, 212, 0.8);
-  outline-offset: 3px;
-}
-
-/* Smoother text rendering */
-html {
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
 }
 
-/* Reduce motion accessibility */
+/* Links should not default blue/purple */
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* Selection */
+::selection {
+  background: color-mix(in srgb, var(--accent) 25%, transparent);
+}
+
+/* Scrollbar (subtle) */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: color-mix(in srgb, var(--accent) 30%, transparent) color-mix(in srgb, var(--bg) 90%, transparent);
+}
+
+/* Focus ring (fallback + enhanced if supported) */
+:focus-visible {
+  outline: 2px solid rgba(0, 255, 204, 0.75);
+  outline-offset: 3px;
+}
+
+@supports (color: color-mix(in srgb, white 50%, black)) {
+  :focus-visible {
+    outline: 2px solid color-mix(in srgb, var(--accent) 85%, transparent);
+  }
+}
+
+/* Form inputs should match theme */
+input,
+textarea,
+select,
+button {
+  font: inherit;
+  color: inherit;
+}
+
+/* =========================
+   TOKEN UTILITIES (USE THESE EVERYWHERE)
+   ========================= */
+
+.text-main {
+  color: var(--text);
+}
+
+.text-muted {
+  color: var(--muted);
+}
+
+.text-accent {
+  color: var(--accent);
+}
+
+.bg-card {
+  background: var(--card);
+}
+
+.border-soft {
+  border-color: var(--border);
+}
+
+.cyber-glow {
+  box-shadow: var(--glow);
+}
+
+/* If you previously used bg-card/70 (Tailwind opacity style),
+   use bg-card-70 instead */
+.bg-card-70 {
+  background: color-mix(in srgb, var(--card) 70%, transparent);
+}
+
+@supports not (background: color-mix(in srgb, white 50%, transparent)) {
+  .bg-card-70 {
+    background: var(--card);
+    opacity: 0.7;
+  }
+}
+
+/* Optional button / chip helper */
+.surface {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+
+/* =========================
+   CYBER BACKGROUND SYSTEM (ALIVE)
+   - Use <div className="cyber-bg" /> in layout
+   ========================= */
+
+.cyber-bg {
+  position: fixed;
+  inset: 0;
+  z-index: -30;
+  pointer-events: none;
+}
+
+/* grid */
+.cyber-bg::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  opacity: 0.10;
+  background-image:
+    linear-gradient(to right, rgba(0, 255, 204, 0.12) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0, 255, 204, 0.12) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+
+/* scanline */
+.cyber-bg::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  opacity: 0.06;
+  background: linear-gradient(to bottom,
+      transparent 0%,
+      rgba(0, 255, 204, 0.25) 50%,
+      transparent 100%);
+  background-size: 100% 8px;
+  animation: scanline 8s linear infinite;
+}
+
+@keyframes scanline {
+  0% {
+    background-position: 0 0;
+  }
+
+  100% {
+    background-position: 0 220px;
+  }
+}
+
+/* Only show in cyber, noir, inferno, aurora -- hide in clean */
+html[data-style="cyber"] .cyber-bg,
+html[data-style="noir"] .cyber-bg,
+html[data-style="inferno"] .cyber-bg,
+html[data-style="aurora"] .cyber-bg {
+  display: block;
+}
+
+html[data-style="clean"] .cyber-bg {
+  display: none;
+}
+
+/* Noir — magenta grid */
+html[data-style="noir"] .cyber-bg::before {
+  background-image:
+    linear-gradient(to right, rgba(217, 70, 239, 0.10) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(217, 70, 239, 0.10) 1px, transparent 1px);
+}
+
+html[data-style="noir"] .cyber-bg::after {
+  background: linear-gradient(to bottom,
+      transparent 0%,
+      rgba(217, 70, 239, 0.20) 50%,
+      transparent 100%);
+  background-size: 100% 8px;
+}
+
+/* Inferno — orange/red grid */
+html[data-style="inferno"] .cyber-bg::before {
+  background-image:
+    linear-gradient(to right, rgba(249, 115, 22, 0.10) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(249, 115, 22, 0.10) 1px, transparent 1px);
+}
+
+html[data-style="inferno"] .cyber-bg::after {
+  background: linear-gradient(to bottom,
+      transparent 0%,
+      rgba(249, 115, 22, 0.20) 50%,
+      transparent 100%);
+  background-size: 100% 8px;
+}
+
+/* Aurora — emerald grid */
+html[data-style="aurora"] .cyber-bg::before {
+  background-image:
+    linear-gradient(to right, rgba(52, 211, 153, 0.10) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(52, 211, 153, 0.10) 1px, transparent 1px);
+}
+
+html[data-style="aurora"] .cyber-bg::after {
+  background: linear-gradient(to bottom,
+      transparent 0%,
+      rgba(52, 211, 153, 0.20) 50%,
+      transparent 100%);
+  background-size: 100% 8px;
+}
+
+/* =========================
+   CYBER MICRO-INTERACTIONS
+   ========================= */
+
+/* card hover lift (cyber only) */
+html[data-style="cyber"] .bg-card {
+  transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
+}
+
+html[data-style="cyber"] .bg-card:hover {
+  transform: translateY(-4px);
+  box-shadow:
+    0 0 0 1px var(--border),
+    0 0 28px rgba(0, 255, 204, 0.12);
+  border-color: color-mix(in srgb, var(--accent) 35%, var(--border));
+}
+
+/* clean mode stays calm */
+html[data-style="clean"] .bg-card {
+  transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
+}
+
+html[data-style="clean"] .bg-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.08);
+}
+
+/* =========================
+   REDUCE MOTION
+   ========================= */
+
+/* =========================
+   GLITCH TEXT EFFECT
+   Apply .glitch to any element
+   ========================= */
+
+.glitch {
+  position: relative;
+  display: inline-block;
+}
+
+.glitch::before,
+.glitch::after {
+  content: attr(data-text);
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.glitch::before {
+  color: var(--accent2);
+  clip-path: polygon(0 20%, 100% 20%, 100% 40%, 0 40%);
+  transform: translateX(0);
+  animation: glitch-before 4s infinite steps(1);
+}
+
+.glitch::after {
+  color: var(--accent);
+  clip-path: polygon(0 60%, 100% 60%, 100% 80%, 0 80%);
+  animation: glitch-after 4s infinite steps(1);
+}
+
+@keyframes glitch-before {
+
+  0%,
+  90% {
+    transform: translateX(0);
+    opacity: 0;
+  }
+
+  91% {
+    transform: translateX(-3px);
+    opacity: 0.8;
+  }
+
+  93% {
+    transform: translateX(3px);
+    opacity: 0.8;
+  }
+
+  95% {
+    transform: translateX(-2px);
+    opacity: 0.8;
+  }
+
+  97% {
+    transform: translateX(0);
+    opacity: 0;
+  }
+
+  100% {
+    transform: translateX(0);
+    opacity: 0;
+  }
+}
+
+@keyframes glitch-after {
+
+  0%,
+  88% {
+    transform: translateX(0);
+    opacity: 0;
+  }
+
+  89% {
+    transform: translateX(2px);
+    opacity: 0.7;
+  }
+
+  91% {
+    transform: translateX(-3px);
+    opacity: 0.7;
+  }
+
+  93% {
+    transform: translateX(0);
+    opacity: 0;
+  }
+
+  100% {
+    transform: translateX(0);
+    opacity: 0;
+  }
+}
+
+/* =========================
+   REDUCE MOTION
+   ========================= */
+
 @media (prefers-reduced-motion: reduce) {
   * {
     animation-duration: 0.001ms !important;

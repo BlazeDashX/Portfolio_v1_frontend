@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Image from "next/image";
 
 type Profile = {
   login: string;
@@ -36,6 +35,7 @@ export default function GitHubStats() {
 
         const p = await pRes.json();
         const r = await rRes.json();
+
         setProfile(p);
         setRepoStats(r);
       } catch (e: any) {
@@ -48,60 +48,64 @@ export default function GitHubStats() {
 
   if (error) {
     return (
-      <div className="rounded-xl border p-5">
-        <p className="font-semibold">GitHub Stats</p>
-        <p className="mt-2 text-sm opacity-80">{error}</p>
+      <div className="rounded-xl border border-soft bg-card p-5">
+        <p className="font-semibold text-main">GitHub Stats</p>
+        <p className="mt-2 text-sm text-muted">{error}</p>
       </div>
     );
   }
 
   if (!profile || !repoStats) {
     return (
-      <div className="rounded-xl border p-5">
-        <p className="font-semibold">GitHub Stats</p>
-        <p className="mt-2 text-sm opacity-70">Loading...</p>
+      <div className="rounded-xl border border-soft bg-card p-5">
+        <p className="font-semibold text-main">GitHub Stats</p>
+        <p className="mt-2 text-sm text-muted">Loading...</p>
       </div>
     );
   }
 
   return (
-    <section className="rounded-xl border p-5">
+    <section className="rounded-xl border border-soft bg-card p-5">
       <div className="flex items-center gap-4">
-        <Image
-  src={profile.avatar_url}
-  alt="GitHub avatar"
-  width={48}
-  height={48}
-  className="h-12 w-12 rounded-full border"
-  priority={false}
-/>
+        <img
+          src={profile.avatar_url}
+          alt="GitHub avatar"
+          className="h-12 w-12 rounded-full border border-soft"
+        />
         <div>
-          <p className="text-lg font-semibold">{profile.name || profile.login}</p>
-          <p className="text-sm opacity-70">@{profile.login}</p>
+          <p className="text-lg font-semibold text-main">
+            {profile.name || profile.login}
+          </p>
+          <p className="text-sm text-muted">@{profile.login}</p>
         </div>
       </div>
 
       <div className="mt-5 grid gap-3 sm:grid-cols-3">
-        <div className="rounded-lg border p-4">
-          <p className="text-sm opacity-70">Repos</p>
-          <p className="text-xl font-semibold">{profile.public_repos}</p>
+        <div className="rounded-lg border border-soft bg-card p-4">
+          <p className="text-sm text-muted">Repos</p>
+          <p className="text-xl font-semibold text-main">{profile.public_repos}</p>
         </div>
-        <div className="rounded-lg border p-4">
-          <p className="text-sm opacity-70">Followers</p>
-          <p className="text-xl font-semibold">{profile.followers}</p>
+
+        <div className="rounded-lg border border-soft bg-card p-4">
+          <p className="text-sm text-muted">Followers</p>
+          <p className="text-xl font-semibold text-main">{profile.followers}</p>
         </div>
-        <div className="rounded-lg border p-4">
-          <p className="text-sm opacity-70">Stars</p>
-          <p className="text-xl font-semibold">{repoStats.totalStars}</p>
+
+        <div className="rounded-lg border border-soft bg-card p-4">
+          <p className="text-sm text-muted">Stars</p>
+          <p className="text-xl font-semibold text-main">{repoStats.totalStars}</p>
         </div>
       </div>
 
       <div className="mt-6">
-        <p className="font-semibold">Top Languages</p>
+        <p className="font-semibold text-main">Top Languages</p>
         <div className="mt-3 flex flex-wrap gap-2">
           {repoStats.topLanguages.map((l) => (
-            <span key={l.name} className="rounded-full border px-3 py-1 text-sm">
-              {l.name} ({l.count})
+            <span
+              key={l.name}
+              className="rounded-full border border-soft bg-card px-3 py-1 text-sm text-main"
+            >
+              {l.name} <span className="text-muted">({l.count})</span>
             </span>
           ))}
         </div>
