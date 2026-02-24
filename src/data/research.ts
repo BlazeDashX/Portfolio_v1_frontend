@@ -1,4 +1,4 @@
-import { ResearchItem } from "@/components/ResearchCard";
+import type { ResearchItem } from "@/types/content";
 
 export const research: ResearchItem[] = [
   {

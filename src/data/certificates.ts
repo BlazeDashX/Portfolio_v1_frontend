@@ -1,11 +1,4 @@
-export interface Certificate {
-  title: string;
-  issuer: string;
-  date: string;
-  credentialUrl: string;
-  skills: string[];
-  image: string;
-}
+import type { Certificate } from "@/types/content";
 
 export const certificates: Certificate[] = [
   {

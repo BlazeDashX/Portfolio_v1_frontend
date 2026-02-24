@@ -1,221 +1,134 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { projects } from "@/data";
 
-import { projects } from "@/data/projects";
-import { Container } from "@/components/ui/Container";
-import Badge from "@/components/ui/Badge";
-
-type PageProps = {
+export default function ProjectDetailPage({
+  params,
+}: {
   params: { slug: string };
-};
-
-export function generateStaticParams() {
-  return projects.map((p) => ({ slug: p.slug }));
-}
-
-export default function ProjectDetailsPage({ params }: PageProps) {
+}) {
   const project = projects.find((p) => p.slug === params.slug);
-  if (!project) notFound();
 
-  // ---- tolerant field mapping (supports old + new shapes) ----
-  const title: string = (project as any).title ?? "Untitled Project";
-
-  const description: string =
-    (project as any).description ??
-    (project as any).summary ??
-    (project as any).desc ??
-    "";
-
-  const techStack: string[] =
-    (project as any).techStack ??
-    (project as any).stack ??
-    [];
-
-  const tags: string[] =
-    (project as any).tags ??
-    // support older "kind" field
-    ((project as any).kind ? [(project as any).kind] : []);
-
-  const date: string | undefined = (project as any).date;
-
-  const images: string[] = (project as any).images ?? [];
-
-  const problem: string | undefined = (project as any).problem;
-  const solution: string | undefined = (project as any).solution;
-  const features: string[] = (project as any).features ?? [];
-
-  const liveUrl: string | undefined =
-    (project as any).liveUrl ?? (project as any).live ?? (project as any).demoUrl;
-
-  const repoUrl: string | undefined =
-    (project as any).repoUrl ?? (project as any).repo ?? (project as any).github;
-
-  // Badge tone helper (optional)
-  const toneForTag = (t: string) => {
-    if (t === "university") return "university";
-    if (t === "industry") return "industry";
-    return "neutral";
-  };
+  if (!project) return notFound();
 
   return (
-    <Container className="pt-24 pb-16 max-w-5xl">
-      {/* Top Back Link */}
-      <Link
-        href="/projects"
-        className="inline-flex items-center gap-2 text-sm font-semibold text-white/60 hover:text-white transition-colors"
-      >
-        ← Back to Projects
-      </Link>
+    <main className="mx-auto max-w-5xl px-4 py-10">
+      {/* Breadcrumb */}
+      <div className="mb-6 text-sm">
+        <Link href="/projects" className="underline underline-offset-4">
+          Projects
+        </Link>{" "}
+        <span className="opacity-60">/</span>{" "}
+        <span className="opacity-80">{project.title}</span>
+      </div>
 
       {/* Header */}
-      <header className="mt-10">
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
-          <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight">
-            {title}
-          </h1>
+      <header className="space-y-3">
+        <h1 className="text-3xl font-bold">{project.title}</h1>
+        <p className="text-base opacity-80">{project.description}</p>
 
-          {date && (
-            <span className="text-white/70 font-mono text-xs md:text-sm bg-white/5 border border-white/10 px-3 py-1 rounded-full w-fit">
-              {date}
+        {/* Tech stack chips */}
+        <div className="flex flex-wrap gap-2 pt-2">
+          {project.techStack.map((t) => (
+            <span
+              key={t}
+              className="rounded-full border px-3 py-1 text-sm opacity-90"
+            >
+              {t}
             </span>
-          )}
+          ))}
         </div>
 
-        {description && (
-          <p className="mt-4 text-lg text-white/70 max-w-3xl leading-relaxed">
-            {description}
-          </p>
-        )}
+        {/* Links */}
+        <div className="flex flex-wrap gap-3 pt-3">
+          {project.repoUrl ? (
+            <a
+              href={project.repoUrl}
+              target="_blank"
+              rel="noreferrer"
+              className="rounded-lg border px-4 py-2 text-sm"
+            >
+              GitHub
+            </a>
+          ) : null}
 
-        <div className="mt-5 flex flex-wrap gap-2">
-          {/* tech stack */}
-          {techStack.map((t) => (
-            <Badge key={t} tone="neutral">
-              {t}
-            </Badge>
-          ))}
-
-          {/* tags: university/industry */}
-          {tags.map((t) => (
-            <Badge key={t} tone={toneForTag(t)}>
-              {t}
-            </Badge>
-          ))}
+          {project.liveUrl ? (
+            <a
+              href={project.liveUrl}
+              target="_blank"
+              rel="noreferrer"
+              className="rounded-lg border px-4 py-2 text-sm"
+            >
+              Live Demo
+            </a>
+          ) : null}
         </div>
       </header>
 
-      {/* Main Panel */}
-      <div className="mt-10 rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl p-6 md:p-8">
-        {/* Image / Gallery */}
-        {images.length > 0 ? (
-          <div className="mb-10">
-            <div className="text-sm text-white/60 mb-3">Gallery</div>
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
-              {images.map((img, i) => (
-                <div
-                  key={`${img}-${i}`}
-                  className="h-28 md:h-40 rounded-2xl border border-white/10 bg-black/40 flex items-center justify-center text-xs text-white/45"
-                >
-                  {img}
+      {/* Case Study */}
+      <section className="mt-10 space-y-10">
+        {/* Problem */}
+        <div className="space-y-2">
+          <h2 className="text-xl font-semibold">Problem</h2>
+          <p className="opacity-90">
+            {project.problem ?? "Add `problem` in src/data/projects.ts"}
+          </p>
+        </div>
+
+        {/* Solution */}
+        <div className="space-y-2">
+          <h2 className="text-xl font-semibold">Solution</h2>
+          <p className="opacity-90">
+            {project.solution ?? "Add `solution` in src/data/projects.ts"}
+          </p>
+        </div>
+
+        {/* Features */}
+        <div className="space-y-2">
+          <h2 className="text-xl font-semibold">Key Features</h2>
+          {project.features?.length ? (
+            <ul className="list-disc space-y-1 pl-5 opacity-90">
+              {project.features.map((f) => (
+                <li key={f}>{f}</li>
+              ))}
+            </ul>
+          ) : (
+            <p className="opacity-70">
+              Add `features: []` in src/data/projects.ts (3–6 bullet points)
+            </p>
+          )}
+        </div>
+
+        {/* Images (optional) */}
+        {project.images?.length ? (
+          <div className="space-y-3">
+            <h2 className="text-xl font-semibold">Screenshots</h2>
+            <div className="grid gap-4 sm:grid-cols-2">
+              {project.images.map((src) => (
+                <div key={src} className="overflow-hidden rounded-xl border">
+                  {/* Using normal img to keep it simple; you can upgrade to next/image later */}
+                  <img
+                    src={src}
+                    alt={`${project.title} screenshot`}
+                    className="h-auto w-full"
+                    loading="lazy"
+                  />
                 </div>
               ))}
             </div>
           </div>
-        ) : (
-          <div className="w-full h-56 md:h-80 rounded-3xl border border-white/10 bg-black/30 flex items-center justify-center text-white/40 font-mono text-sm mb-10">
-            [Image Placeholder]
-          </div>
-        )}
+        ) : null}
+      </section>
 
-        {/* Content + Sidebar */}
-        <div className="grid md:grid-cols-3 gap-10">
-          <div className="md:col-span-2 space-y-10">
-            {problem && (
-              <section>
-                <h2 className="text-2xl font-bold mb-3 border-b border-white/10 pb-2">
-                  The Problem
-                </h2>
-                <p className="text-white/70 leading-relaxed">{problem}</p>
-              </section>
-            )}
-
-            {solution && (
-              <section>
-                <h2 className="text-2xl font-bold mb-3 border-b border-white/10 pb-2">
-                  The Solution
-                </h2>
-                <p className="text-white/70 leading-relaxed">{solution}</p>
-              </section>
-            )}
-
-            {features.length > 0 && (
-              <section>
-                <h2 className="text-2xl font-bold mb-3 border-b border-white/10 pb-2">
-                  Key Features
-                </h2>
-                <ul className="list-disc list-inside space-y-2 text-white/70">
-                  {features.map((f, i) => (
-                    <li key={i}>{f}</li>
-                  ))}
-                </ul>
-              </section>
-            )}
-
-            {/* If none of these exist, show something so page never feels empty */}
-            {!problem && !solution && features.length === 0 && (
-              <section>
-                <h2 className="text-2xl font-bold mb-3 border-b border-white/10 pb-2">
-                  Overview
-                </h2>
-                <p className="text-white/65 leading-relaxed">
-                  Add <span className="text-white/90 font-medium">problem</span>,{" "}
-                  <span className="text-white/90 font-medium">solution</span>, and{" "}
-                  <span className="text-white/90 font-medium">features</span> fields in{" "}
-                  <span className="text-white/90 font-medium">src/data/projects.ts</span>{" "}
-                  to make this page feel like a full case study.
-                </p>
-              </section>
-            )}
-          </div>
-
-          {/* Sidebar */}
-          <aside className="space-y-4 bg-black/20 p-5 rounded-2xl border border-white/10 h-fit">
-            <h3 className="font-bold text-lg">Project Links</h3>
-
-            {liveUrl ? (
-              <a
-                href={liveUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center justify-center w-full py-3 rounded-xl font-semibold transition
-                           bg-(--amber) text-black hover:opacity-90"
-              >
-                View Live Site ↗
-              </a>
-            ) : (
-              <div className="w-full py-3 rounded-xl border border-white/10 text-center text-sm text-white/40">
-                Live link not added
-              </div>
-            )}
-
-            {repoUrl ? (
-              <a
-                href={repoUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center justify-center w-full py-3 rounded-xl font-semibold transition
-                           border border-white/15 hover:bg-white/5"
-              >
-                Source Code ↗
-              </a>
-            ) : (
-              <div className="w-full py-3 rounded-xl border border-white/10 text-center text-sm text-white/40">
-                Repo link not added
-              </div>
-            )}
-          </aside>
-        </div>
+      {/* Footer Nav */}
+      <div className="mt-12 flex justify-between border-t pt-6">
+        <Link href="/projects" className="underline underline-offset-4">
+          ← Back to Projects
+        </Link>
+        <Link href="/contact" className="underline underline-offset-4">
+          Contact →
+        </Link>
       </div>
-    </Container>
+    </main>
   );
 }
