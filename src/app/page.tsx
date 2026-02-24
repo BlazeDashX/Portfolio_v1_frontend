@@ -4,38 +4,14 @@ import { motion } from "framer-motion";
 import MagneticButton from "@/components/MagneticButton";
 import ProfileTilt from "@/components/ProfileTilt";
 import ProjectCard from "@/components/ProjectCard";
-
-const featured = [
-  {
-    slug: "e-commerce-engine",
-    title: "E-Commerce Engine",
-    description:
-      "A scalable backend with auth, product, orders, and clean architecture.",
-    techStack: ["Node.js", "PostgreSQL", "Redis"],
-    tags: ["industry", "university"], // if you want both ALWAYS
-    href: "/projects/e-commerce-engine",
-  },
-  {
-    slug: "task-orchestrator",
-    title: "Task Orchestrator",
-    description:
-      "Kanban-style management with automation workflows and analytics.",
-    techStack: ["Next.js", "TypeScript", "D3"],
-    tags: ["industry", "university"],
-    href: "/projects/task-orchestrator",
-  },
-  {
-    slug: "portfolio-v2",
-    title: "Portfolio v2",
-    description:
-      "App-router portfolio with motion system + 3D identity background.",
-    techStack: ["Next.js", "Tailwind", "Framer Motion"],
-    tags: ["industry", "university"],
-    href: "/projects/portfolio-v2",
-  },
-];
+import GitHubStats from "@/components/github/GitHubStats";
+import { projects } from "@/data";
 
 export default function HomePage() {
+  // ✅ Pick featured items from your real data (no duplicates, no `as any`)
+  const featuredSlugs = ["e-commerce-engine", "task-orchestrator", "portfolio-v2"];
+  const featured = projects.filter((p) => featuredSlugs.includes(p.slug));
+
   return (
     <>
       {/* === HOME PAGE ONLY BACKGROUND EFFECTS === */}
@@ -132,6 +108,23 @@ export default function HomePage() {
           </div>
         </section>
 
+        {/* GITHUB STATS (NEW) */}
+        <section className="space-y-4">
+          <div className="flex items-end justify-between gap-4">
+            <h2 className="text-3xl font-semibold tracking-tight">GitHub</h2>
+            <a
+              className="text-sm text-(--mint) hover:opacity-80 transition"
+              href="https://github.com/BlazeDashX"
+              target="_blank"
+              rel="noreferrer"
+            >
+              View profile →
+            </a>
+          </div>
+
+          <GitHubStats />
+        </section>
+
         {/* FEATURED */}
         <section>
           <div className="flex items-end justify-between gap-4">
@@ -143,7 +136,7 @@ export default function HomePage() {
 
           <div className="mt-7 grid grid-cols-1 md:grid-cols-3 gap-5">
             {featured.map((p) => (
-              <ProjectCard key={p.slug} project={p as any} />
+              <ProjectCard key={p.slug} project={p} />
             ))}
           </div>
         </section>
