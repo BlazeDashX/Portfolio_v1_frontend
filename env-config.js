@@ -1,0 +1,1 @@
+export const API_URL = typeof window !== 'undefined' ? '/api' : 'http://127.0.0.1:3005/api';
