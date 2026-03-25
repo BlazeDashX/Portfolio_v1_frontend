@@ -7,6 +7,6 @@ export const certificates: Certificate[] = [
     date: "2025-08-30",
     credentialUrl: "#",
     skills: ["Typing", "Speed", "Accuracy"],
-    image: "/cert-typing.jpg",
+    image: "/cert-typing.png",
   },
 ];
